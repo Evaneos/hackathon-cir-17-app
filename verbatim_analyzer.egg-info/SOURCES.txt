@@ -1,0 +1,8 @@
+README.md
+app.py
+pyproject.toml
+verbatim_analyzer.egg-info/PKG-INFO
+verbatim_analyzer.egg-info/SOURCES.txt
+verbatim_analyzer.egg-info/dependency_links.txt
+verbatim_analyzer.egg-info/requires.txt
+verbatim_analyzer.egg-info/top_level.txt

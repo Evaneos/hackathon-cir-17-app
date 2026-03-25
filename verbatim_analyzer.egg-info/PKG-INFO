@@ -1,3 +1,24 @@
+Metadata-Version: 2.4
+Name: verbatim-analyzer
+Version: 0.1.0
+Summary: Alternative open-source à Cobbai pour l'analyse automatisée des verbatims clients
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: streamlit==1.41.1
+Requires-Dist: pandas==2.2.3
+Requires-Dist: plotly==5.24.1
+Requires-Dist: bertopic==0.16.4
+Requires-Dist: sentence-transformers==3.3.1
+Requires-Dist: hdbscan==0.8.40
+Requires-Dist: umap-learn==0.5.7
+Requires-Dist: transformers>=4.47.1
+Requires-Dist: torch>=2.9.0
+Requires-Dist: scikit-learn>=1.6.0
+Requires-Dist: wordcloud>=1.9.4
+Requires-Dist: matplotlib>=3.9.3
+Requires-Dist: pyarrow>=15.0.0
+Requires-Dist: tqdm>=4.66.0
+
 # 🔍 Verbatim Analyzer
 
 Alternative open-source à Cobbai pour l'analyse automatisée des verbatims clients.
