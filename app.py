@@ -17,6 +17,9 @@ import math
 from pathlib import Path
 from datetime import datetime
 
+# Mode léger pour Vercel (cold start rapide)
+IS_VERCEL = os.getenv("VERCEL") == "1" or os.getenv("VERCEL") is not None
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
@@ -31,12 +34,11 @@ DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
 # Vercel / Serverless compatibility
-import os
-if os.getenv("VERCEL"):
+if IS_VERCEL:
     # Sur Vercel, on utilise /tmp qui est writable (mais non persistant)
     DATA_DIR = Path("/tmp/data")
     DATA_DIR.mkdir(exist_ok=True)
-    st.info("🚀 Mode Vercel : les analyses sont temporaires (non persistées entre déploiements)")
+    st.sidebar.warning("⚡ Mode Démo Vercel - Analyses non persistées")
 
 # ---------------------------------------------------------------------------
 # CSS
@@ -63,7 +65,11 @@ st.markdown("""
 # ---------------------------------------------------------------------------
 @st.cache_resource(show_spinner=False)
 def load_sentiment_pipeline():
-    """Load multilingual sentiment analysis pipeline on MPS (Apple Silicon GPU)."""
+    """Load multilingual sentiment analysis pipeline."""
+    if IS_VERCEL:
+        st.warning("🔄 Analyse de sentiment désactivée en mode démo Vercel (trop lourd)")
+        return None
+
     import torch
     from transformers import pipeline
     device = "mps" if torch.backends.mps.is_available() else -1
@@ -79,6 +85,10 @@ def load_sentiment_pipeline():
 @st.cache_resource(show_spinner=False)
 def load_embedding_model():
     """Load multilingual sentence-transformer for BERTopic."""
+    if IS_VERCEL:
+        st.warning("🔄 Clustering IA désactivé en mode démo Vercel (trop lourd pour le cold start)")
+        return None
+
     from sentence_transformers import SentenceTransformer
     return SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
@@ -86,6 +96,9 @@ def load_embedding_model():
 def run_sentiment_analysis(texts: list[str], progress_bar=None) -> list[dict]:
     """Run sentiment analysis using ONNX-optimized pipeline."""
     pipe = load_sentiment_pipeline()
+    if pipe is None:  # Mode Vercel léger
+        return [{"label": "neutre", "score": 0.5, "stars": 3, "numeric": 0.0} for _ in texts]
+
     sentiment_map = {1: "très négatif", 2: "négatif", 3: "neutre", 4: "positif", 5: "très positif"}
     results = []
     total = len(texts)
@@ -191,6 +204,12 @@ def _multilingual_stop_words() -> list[str]:
 
 def run_clustering(texts: list[str], min_cluster_size: int = 15):
     """Run BERTopic clustering. Returns (topic_model, topics, probs)."""
+    if IS_VERCEL:
+        # Mode démo : clustering simulé
+        n = len(texts)
+        topics = [i % 5 for i in range(n)]  # 5 topics fictifs
+        return None, topics, None
+
     from bertopic import BERTopic
     from hdbscan import HDBSCAN
     from sklearn.feature_extraction.text import CountVectorizer

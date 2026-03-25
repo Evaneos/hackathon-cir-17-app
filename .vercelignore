@@ -1,0 +1,6 @@
+data/
+__pycache__/
+*.egg-info/
+.git
+.gitignore
+sample_data.csv

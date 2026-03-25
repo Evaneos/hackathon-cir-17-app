@@ -34,17 +34,21 @@ pip install .
 streamlit run app.py
 ```
 
-### Option 3 : Vercel (recommandé pour du serverless rapide)
+### Option 3 : Vercel (version légère pour démo rapide)
 
-1. Push ce repo sur GitHub
-2. Aller sur [vercel.com](https://vercel.com/new)
-3. Importer le repo GitHub
-4. Configurer les variables d'environnement si besoin (`VERCEL=1`)
-5. Déployer
+**Pour avoir une UI live très rapidement :**
 
-Vercel détecte automatiquement le `vercel.json` et utilise `@vercel/python`.
+1. `git push` ce repo sur GitHub
+2. Aller sur [vercel.com/new](https://vercel.com/new)
+3. Importer le repo
+4. Cliquer sur **Deploy**
 
-**Note** : Les analyses sont stockées dans `/tmp` → non persistées entre redéploiements (utiliser un volume persistant ou une BDD pour la prod).
+L'application est maintenant optimisée pour Vercel :
+- Mode léger automatique (`VERCEL=1`)
+- Modèles IA désactivés (sentiment + clustering simulés)
+- Cold start beaucoup plus rapide
+
+**Note** : C'est une version démo. Les analyses sont temporaires.
 
 ### Option 4 : Streamlit Community Cloud (gratuit)
 
