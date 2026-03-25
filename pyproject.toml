@@ -7,7 +7,7 @@ name = "verbatim-analyzer"
 version = "0.1.0"
 description = "Alternative open-source à Cobbai pour l'analyse automatisée des verbatims clients"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.15"
 dependencies = [
     "streamlit==1.41.1",
     "pandas==2.2.3",
