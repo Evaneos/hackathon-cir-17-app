@@ -34,7 +34,19 @@ pip install .
 streamlit run app.py
 ```
 
-### Option 3 : Streamlit Community Cloud (gratuit)
+### Option 3 : Vercel (recommandé pour du serverless rapide)
+
+1. Push ce repo sur GitHub
+2. Aller sur [vercel.com](https://vercel.com/new)
+3. Importer le repo GitHub
+4. Configurer les variables d'environnement si besoin (`VERCEL=1`)
+5. Déployer
+
+Vercel détecte automatiquement le `vercel.json` et utilise `@vercel/python`.
+
+**Note** : Les analyses sont stockées dans `/tmp` → non persistées entre redéploiements (utiliser un volume persistant ou une BDD pour la prod).
+
+### Option 4 : Streamlit Community Cloud (gratuit)
 
 1. Push ce repo sur GitHub
 2. Aller sur https://share.streamlit.io

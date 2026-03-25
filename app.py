@@ -30,6 +30,14 @@ st.set_page_config(
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
+# Vercel / Serverless compatibility
+import os
+if os.getenv("VERCEL"):
+    # Sur Vercel, on utilise /tmp qui est writable (mais non persistant)
+    DATA_DIR = Path("/tmp/data")
+    DATA_DIR.mkdir(exist_ok=True)
+    st.info("🚀 Mode Vercel : les analyses sont temporaires (non persistées entre déploiements)")
+
 # ---------------------------------------------------------------------------
 # CSS
 # ---------------------------------------------------------------------------
